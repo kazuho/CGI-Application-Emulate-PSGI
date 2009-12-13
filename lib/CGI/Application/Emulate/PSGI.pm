@@ -65,4 +65,21 @@ CGI::Application::Emulate::PSGI - Legacy-friendly PSGI adapter for CGI::Applicat
         $webapp->run();
     });
 
+=head1 DESCRIPTION
+
+CGI::Application::Emulate::PSGI is a runner to run L<CGI::Application> as a PSGI application.  It is compatible with L<CGI::Application::Dispatch>, and other modules calling L<CGI.pm> not in OO-style.
+
+=head1 AUTHOR
+
+Kazuho Oku E<lt>kazuhooku@gmail.comE<gt>
+
+=head1 LICENSE
+
+This library is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself.
+
+=head1 SEE ALSO
+
+L<CGI::Application::PSGI>
+
 =cut
