@@ -1,6 +1,6 @@
 NAME
-    CGI::Application::Emulate::PSGI - Legacy-code-friendly PSGI adapter for
-    CGI::Application
+    CGI::Application::Emulate::PSGI - a legacy-code-friendly PSGI adapter
+    for CGI::Application
 
 SYNOPSIS
         # if using CGI::Application
@@ -19,8 +19,8 @@ DESCRIPTION
     PSGI application. Differences from CGI::Application::PSGI are:
 
     uses CGI.pm instead of CGI::PSGI
-        CGI::Application::PSGI does not support programs calling CGI.pm in
-        func-style (like CGI::virtual_host()).
+        CGI::Application::PSGI (that uses CGI::PSGI) does not support
+        programs calling CGI.pm in func-style (like CGI::virtual_host()).
         CGI::Application::Emulate::PSGI sets up environment variables so
         that codes using CGI.pm will work.
 

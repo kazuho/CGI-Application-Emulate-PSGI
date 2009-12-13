@@ -56,7 +56,7 @@ __END__
 
 =head1 NAME
 
-CGI::Application::Emulate::PSGI - Legacy-code-friendly PSGI adapter for CGI::Application
+CGI::Application::Emulate::PSGI - a legacy-code-friendly PSGI adapter for CGI::Application
 
 =head1 SYNOPSIS
 
@@ -79,7 +79,7 @@ CGI::Application::Emulate::PSGI is a runner to run L<CGI::Application> as a PSGI
 
 =item uses L<CGI.pm> instead of L<CGI::PSGI>
 
-L<CGI::Application::PSGI> does not support programs calling L<CGI.pm> in func-style (like CGI::virtual_host()).  CGI::Application::Emulate::PSGI sets up environment variables so that codes using L<CGI.pm> will work.
+L<CGI::Application::PSGI> (that uses L<CGI::PSGI>) does not support programs calling L<CGI.pm> in func-style (like CGI::virtual_host()).  CGI::Application::Emulate::PSGI sets up environment variables so that codes using L<CGI.pm> will work.
 
 =item compatible with L<CGI::Application::Dispatch>
 
