@@ -60,9 +60,15 @@ CGI::Application::Emulate::PSGI - Legacy-code-friendly PSGI adapter for CGI::App
 
 =head1 SYNOPSIS
 
+    # if using CGI::Application
     my $app = CGI::Application::Emulate::PSGI->handler(sub {
         my $webapp = WebApp->new();
         $webapp->run();
+    });
+
+    # if using CGI::Application::Dispatch
+    my $app = CGI::Application::Emulate::PSGI->handler(sub {
+        WebApp::Dispatch->dispatch();
     });
 
 =head1 DESCRIPTION
