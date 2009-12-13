@@ -32,8 +32,8 @@ sub handler {
             $code->();
         };
         my $status = 200;
-        my ($headers, $body) = split /\r\n\r\n/, $output, 2;
-        my @headers = map { split /:\s*/, $_, 2 } split /\r\n/, $headers;
+        my ($headers, $body) = split /\r?\n\r?\n/, $output, 2;
+        my @headers = map { split /:\s*/, $_, 2 } split /\r?\n/, $headers;
         for (my $i = 0; $i < @headers;) {
             if ($headers[$i] =~ /^status$/i) {
                 $status = $headers[$i + 1];
