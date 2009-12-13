@@ -1,0 +1,35 @@
+NAME
+    CGI::Application::Emulate::PSGI - Legacy-code-friendly PSGI adapter for
+    CGI::Application
+
+SYNOPSIS
+        my $app = CGI::Application::Emulate::PSGI->handler(sub {
+            my $webapp = WebApp->new();
+            $webapp->run();
+        });
+
+DESCRIPTION
+    CGI::Application::Emulate::PSGI is a runner to run CGI::Application as a
+    PSGI application. Differences from CGI::Application::PSGI are:
+
+    uses CGI.pm instead of CGI::PSGI
+        CGI::Application::PSGI does not support programs calling CGI.pm in
+        func-style (like CGI::virtual_host()).
+        CGI::Application::Emulate::PSGI sets up environment variables so
+        that codes using CGI.pm will work.
+
+    compatible with CGI::Application::Dispatch
+        The interface of CGI::Application::Emulate::PSGI is different from
+        CGI::Application::PSGI, and is compatible with
+        CGI::Application::Dispatch.
+
+AUTHOR
+    Kazuho Oku <kazuhooku@gmail.com>
+
+LICENSE
+    This library is free software; you can redistribute it and/or modify it
+    under the same terms as Perl itself.
+
+SEE ALSO
+    CGI::Application::PSGI
+
