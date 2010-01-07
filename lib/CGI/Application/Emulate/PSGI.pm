@@ -7,7 +7,7 @@ use CGI;
 use CGI::Emulate::PSGI;
 use CGI::Parse::PSGI;
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 sub handler {
     my ($class, $code,) = @_;
