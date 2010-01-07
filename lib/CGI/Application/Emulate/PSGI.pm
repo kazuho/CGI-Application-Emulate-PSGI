@@ -4,6 +4,8 @@ use 5.008;
 use strict;
 use warnings;
 use CGI;
+use CGI::Emulate::PSGI;
+use CGI::Parse::PSGI;
 
 our $VERSION = '0.01';
 
@@ -12,42 +14,18 @@ sub handler {
     
     return sub {
         my $env = shift;
-        my $environment = {
-            GATEWAY_INTERFACE => 'CGI/1.1',
-            # not in RFC 3875
-            HTTPS => ( ( $env->{'psgi.url_scheme'} eq 'https' ) ? 'ON' : 'OFF' ),
-            SERVER_SOFTWARE => "CGI-Emulate-PSGI",
-            REMOTE_ADDR     => '127.0.0.1',
-            REMOTE_HOST     => 'localhost',
-            REMOTE_PORT     => int( rand(64000) + 1000 ),    # not in RFC 3875
-            # REQUEST_URI     => $uri->path_query,             # not in RFC 3875
-            ( map { $_ => $env->{$_} } grep !/^psgi\./, keys %$env ),
-            CGI_APP_RETURN_ONLY => 1,
-        };
         my $output = do {
+            local %ENV = (
+                %ENV,
+                CGI::Emulate::PSGI->emulate_environment($env),
+                CGI_APP_RETURN_ONLY => 1,
+            );
             local *STDIN  = $env->{'psgi.input'};
             local *STDERR = $env->{'psgi.errors'};
-            local @ENV{keys %$environment} = values %$environment;
             CGI::initialize_globals();
             $code->();
         };
-        my $status = 200;
-        my ($headers, $body) = split /\r?\n\r?\n/, $output, 2;
-        my @headers = map { split /:\s*/, $_, 2 } split /\r?\n/, $headers;
-        for (my $i = 0; $i < @headers;) {
-            if ($headers[$i] =~ /^status$/i) {
-                $status = $headers[$i + 1];
-                $status =~ s/\s+.*$//; # only keep the digits
-                splice @headers, $i, 2;
-            } else {
-                $i += 2;
-            }
-        }
-        return [
-            $status,
-            \@headers,
-            [ $body ],
-        ];
+        return CGI::Parse::PSGI::parse_cgi_output(\$output);
     };
 }
 
